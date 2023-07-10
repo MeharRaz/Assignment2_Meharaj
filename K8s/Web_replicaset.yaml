@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: app-replicaset
+  labels:
+    app: students
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: students
+  template:
+    metadata:
+      labels:
+        app: students
+    spec:
+      containers:
+      - name: web
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+        image: 716654980616.dkr.ecr.us-east-1.amazonaws.com/assignment02-docker:v1.0
+        env:
+        - name: DBPORT
+          value: "3306"
+        - name: DBPWD
+          value: "123"
+        - name: DBHOST
+          value: "mysql.assignment2.svc.cluster.local"
+        - name: DBUSER
+          value: "root"
